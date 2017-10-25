@@ -170,17 +170,17 @@ class Calendar extends Component {
       const markingExists = this.props.markedDates ? true : false;
       dayComp = (
         <DayComp
-            key={id}
-            state={state}
-            theme={this.props.theme}
-            onPress={this.pressDay}
-            day={day}
-            marked={this.getDateMarking(day)}
-            markingExists={markingExists}
-          >
-            {day.getDate()}
-          </DayComp>
-        );
+          key={id}
+          state={state}
+          theme={this.props.theme}
+          onPress={this.pressDay}
+          day={day}
+          marked={this.getDateMarking(day)}
+          markingExists={markingExists}
+        >
+          {day.getDate()}
+        </DayComp>
+      );
     }
     return dayComp;
   }
