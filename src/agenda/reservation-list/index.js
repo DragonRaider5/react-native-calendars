@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {
-  FlatList,
   ActivityIndicator,
   View
 } from 'react-native';
+import Immutable from 'immutable'
+import ImmutableFlatList from 'react-native-immutable-flatlist'
 import Reservation from './reservation';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
@@ -38,7 +39,7 @@ class ReactComp extends Component {
     super(props);
     this.styles = styleConstructor(props.theme);
     this.state = {
-      reservations: []
+      reservations: Immutable.List()
     };
     this.heights=[];
     this.selectedDay = this.props.selectedDay;
@@ -123,20 +124,21 @@ class ReactComp extends Component {
 
   getReservationsForDay(iterator, props) {
     const day = iterator.clone();
-    const res = props.reservations[day.toString('yyyy-MM-dd')];
-    if (res && res.length) {
+    const res = props.reservations.get(day.toString('yyyy-MM-dd'));
+    if (res && res.size) {
       return res.map((reservation, i) => {
-        return {
-          reservation,
-          date: i ? false : day,
-          day
-        };
+        return reservation
+          .set('date', i ? false : day)
+          .set('day', day)
       });
     } else if (res) {
-      return [{
-        date: iterator.clone(),
-        day
-      }];
+      return Immutable.List()
+        .push(
+          Immutable.Map({
+            date: iterator.clone(),
+            day
+          })
+        );
     } else {
       return false;
     }
@@ -148,15 +150,15 @@ class ReactComp extends Component {
 
   getReservations(props) {
     if (!props.reservations || !props.selectedDay) {
-      return {reservations: [], scrollPosition: 0};
+      return {reservations: Immutable.List(), scrollPosition: 0};
     }
-    let reservations = [];
-    if (this.state.reservations && this.state.reservations.length) {
-      const iterator = this.state.reservations[0].day.clone();
+    let reservations = Immutable.List();
+    if (this.state.reservations && this.state.reservations.size) {
+      const iterator = this.state.reservations.getIn([ 0, 'day' ]).clone();
       while (iterator.getTime() < props.selectedDay.getTime()) {
         const res = this.getReservationsForDay(iterator, props);
         if (!res) {
-          reservations = [];
+          reservations = Immutable.List();
           break;
         } else {
           reservations = reservations.concat(res);
@@ -164,7 +166,7 @@ class ReactComp extends Component {
         iterator.addDays(1);
       }
     }
-    const scrollPosition = reservations.length;
+    const scrollPosition = reservations.size;
     const iterator = props.selectedDay.clone();
     for (let i = 0; i < 31; i++) {
       const res = this.getReservationsForDay(iterator, props);
@@ -178,11 +180,11 @@ class ReactComp extends Component {
   }
 
   render() {
-    if (!this.props.reservations || !this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')]) {
+    if (!this.props.reservations || !this.props.reservations.has(this.props.selectedDay.toString('yyyy-MM-dd'))) {
       return (<ActivityIndicator style={{marginTop: 80}}/>);
     }
     return (
-      <FlatList
+      <ImmutableFlatList
         ref={(c) => this.list = c}
         style={this.props.style}
         renderItem={this.renderRow.bind(this)}

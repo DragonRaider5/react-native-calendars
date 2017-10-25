@@ -18,13 +18,13 @@ class ReservationListItem extends Component {
     if (!r1 && !r2) {
       changed = false;
     } else if (r1 && r2) {
-      if (r1.day.getTime() !== r2.day.getTime()) {
+      if (r1.get('day').getTime() !== r2.get('day').getTime()) {
         changed = true;
-      } else if (!r1.reservation && !r2.reservation) {
+      } else if (!r1.has('reservation') && !r2.has('reservation')) {
         changed = false;
-      } else if (r1.reservation && r2.reservation) {
-        if ((!r1.date && !r2.date) || (r1.date && r2.date)) {
-          changed = this.props.rowHasChanged(r1.reservation, r2.reservation);
+      } else if (r1.has('reservation') && r2.has('reservation')) {
+        if ((!r1.has('date') && !r2.has('date')) || (r1.has('date') && r2.has('date'))) {
+          changed = this.props.rowHasChanged(r1.get('reservation'), r2.get('reservation'));
         }
       }
     }
@@ -51,17 +51,17 @@ class ReservationListItem extends Component {
   }
 
   render() {
-    const {reservation, date} = this.props.item;
+    const item = this.props.item;
     let content;
-    if (reservation) {
-      const firstItem = date ? true : false;
-      content = this.props.renderItem(reservation, firstItem);
+    if (item.has('reservation')) {
+      const firstItem = item.has('date') ? true : false;
+      content = this.props.renderItem(item.get('reservation'), firstItem);
     } else {
-      content = this.props.renderEmptyDate(date);
+      content = this.props.renderEmptyDate(item.get('date'));
     }
     return (
       <View style={this.styles.container}>
-        {this.renderDate(date, reservation)}
+        {this.renderDate(item.get('date'), item.get('reservation'))}
         <View style={{flex:1}}>
           {content}
         </View>
