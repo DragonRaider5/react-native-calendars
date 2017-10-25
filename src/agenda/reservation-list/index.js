@@ -131,7 +131,7 @@ class ReactComp extends PureComponent {
           reservation,
           date: i ? false : day,
           day
-        })
+        });
       });
     } else if (res) {
       return Immutable.List()
