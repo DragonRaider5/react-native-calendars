@@ -3,6 +3,7 @@ import {
   View,
   ViewPropTypes,
 } from 'react-native';
+import Immutable from 'immutable';
 import PropTypes from 'prop-types';
 
 import XDate from 'xdate';
@@ -17,7 +18,7 @@ import shouldComponentUpdate from './updater';
 //Fallback when RN version is < 0.44
 const viewPropTypes = ViewPropTypes || View.propTypes;
 
-const EmptyArray = [];
+const EmptyArray = Immutable.List();
 
 class Calendar extends Component {
   static propTypes = {
@@ -189,8 +190,8 @@ class Calendar extends Component {
     if (!this.props.markedDates) {
       return false;
     }
-    const dates = this.props.markedDates[day.toString('yyyy-MM-dd')] || EmptyArray;
-    if (dates.length || dates) {
+    const dates = this.props.markedDates.get(day.toString('yyyy-MM-dd')) || EmptyArray;
+    if (dates.size > 0 || dates) {
       return dates;
     } else {
       return false;
@@ -217,7 +218,7 @@ class Calendar extends Component {
     if (current) {
       const lastMonthOfDay = current.clone().addMonths(1, true).setDate(1).addDays(-1).toString('yyyy-MM-dd');
       if (this.props.displayLoadingIndicator &&
-          !(this.props.markedDates && this.props.markedDates[lastMonthOfDay])) {
+          !(this.props.markedDates && this.props.markedDates.get(lastMonthOfDay))) {
         indicator = true;
       }
     }
