@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
   ActivityIndicator,
   View
 } from 'react-native';
-import Immutable from 'immutable'
-import ImmutableFlatList from 'react-native-immutable-flatlist'
+import Immutable from 'immutable';
+import ImmutableFlatList from 'react-native-immutable-flatlist';
 import Reservation from './reservation';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
@@ -12,7 +12,7 @@ import XDate from 'xdate';
 import dateutils from '../../dateutils';
 import styleConstructor from './style';
 
-class ReactComp extends Component {
+class ReactComp extends PureComponent {
   static propTypes = {
     // specify your item comparison function for increased performance
     rowHasChanged: PropTypes.func,
