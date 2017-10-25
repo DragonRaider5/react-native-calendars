@@ -14,7 +14,9 @@
   "author": "Wix.com",
   "license": "MIT",
   "dependencies": {
+    "immutable": "^3.8.2",
     "prop-types": "^15.5.10",
+    "react-native-immutable-flatlist": "git+https://github.com/DragonRaider5/react-native-immutable-flatlist.git",
     "xdate": "^0.8.0"
   },
   "devDependencies": {
