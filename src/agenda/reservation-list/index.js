@@ -127,9 +127,11 @@ class ReactComp extends PureComponent {
     const res = props.reservations.get(day.toString('yyyy-MM-dd'));
     if (res && res.size) {
       return res.map((reservation, i) => {
-        return reservation
-          .set('date', i ? false : day)
-          .set('day', day)
+        return Immutable.Map({
+          reservation,
+          date: i ? false : day,
+          day
+        })
       });
     } else if (res) {
       return Immutable.List()
