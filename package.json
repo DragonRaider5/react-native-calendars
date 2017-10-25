@@ -9,10 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wix/react-native-calendars"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "url": "git+https://github.com/DragonRaider5/react-native-calendars"
   },
   "author": "Wix.com",
   "license": "MIT",
@@ -21,8 +18,8 @@
     "xdate": "^0.8.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
     "babel-eslint": "^7.2.3",
+    "eslint": "^4.9.0",
     "eslint-plugin-react": "^7.0.0",
     "jasmine": "^2.5.2",
     "react": "16.0.0-alpha.12",
