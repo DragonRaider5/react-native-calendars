@@ -196,7 +196,6 @@ class ReactComp extends PureComponent {
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={200}
         onMoveShouldSetResponderCapture={() => {this.onListTouch(); return false;}}
-        ItemSeparatorComponent={this.props.ItemSeparatorComponent}
         keyExtractor={(item, index) => index}
       />
     );
