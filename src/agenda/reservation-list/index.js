@@ -130,6 +130,7 @@ class ReactComp extends PureComponent {
         return Immutable.Map({
           reservation,
           date: i ? false : day,
+          lastItem: i === res.size - 1,
           day
         });
       });

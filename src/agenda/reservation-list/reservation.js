@@ -55,7 +55,7 @@ class ReservationListItem extends Component {
     let content;
     if (item.has('reservation')) {
       const firstItem = item.get('date') ? true : false;
-      content = this.props.renderItem(item.get('reservation'), firstItem);
+      content = this.props.renderItem(item.get('reservation'), firstItem, item.get('lastItem'));
     } else {
       content = this.props.renderEmptyDate(item.get('date'));
     }
